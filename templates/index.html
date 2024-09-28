@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Praktický test</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body id="bodyID">
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <img src="/static/logo.svg" alt="logo">
+                </a>
+            </nav>
+        </div>
+    </header>
+    <section id="section-Search">
+        <div class="container">
+            <div class="search">
+                <h1 class="search__title">
+                    Welcome to search
+                </h1>
+                <form class="subsearch" id="searchFormID">
+                    <input type="text" name="content" id="searchID" />
+                    <button class="searchBtn" id="searchBtn"><img src="/static/search.svg"></button>
+            </div>
+        </div>
+        </div>
+    </section>
+    <section id="section-Output">
+    </section>
+    <section id="section-Save" class="saveSection">
+        <button class="saveBtn" id="saveBtn">Save results</button>
+    </section>
+</body>
+
+<script>
+    var resultToSave;
+    const saveBtn = document.getElementById("saveBtn");
+    saveBtn.addEventListener("click", () => {
+        if (resultToSave) {
+            const file = new Blob([JSON.stringify(resultToSave, ["url", "title", "snippet"], "\t")], { type: 'application/json' });
+            var url = URL.createObjectURL(file);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'result.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    });
+
+    document.getElementById('searchFormID').onsubmit = async function (event) {
+        event.preventDefault();  // Отменяем стандартное поведение формы
+
+        const q = document.getElementById('searchID').value;
+
+        const response = await fetch('/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ q })
+        });
+
+        const results = await response.json();
+        resultToSave = results;
+        // Отображаем результаты
+        const outputSection = document.getElementById('section-Output');
+        while (outputSection.firstChild) {
+            outputSection.removeChild(outputSection.firstChild);
+        }
+        // Проверка на наличие ошибок
+        if (results.error) {
+            outputSection.innerHTML = `<p>Ошибка: ${results.error}</p>`;
+        } else {
+            results.forEach(result => {
+                outputSection.insertAdjacentHTML('afterbegin', `<div class="output"><a href="${result.url}">${result.title}</a><p>${result.snippet}</p></div>`);
+            });
+        }
+    };
+</script>
+</body>
+
+</html>

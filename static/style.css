@@ -1,0 +1,129 @@
+html {
+    margin: 0px 10px;
+    vertical-align: baseline;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #1A0A03;
+    overflow-wrap: normal;
+}
+
+header {
+    display: grid;
+    margin-top: 5px;
+    padding: 10px 0;
+    border: #000000;
+    border-style: groove;
+    border-radius: 10px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    min-width: 640px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    justify-content: space-around;
+    border-radius: 50px;
+    filter: drop-shadow(0px 3px 5px rgba(0, 0, 0.25));
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+header img {
+    width: 10%;
+}
+
+.search {
+    display: grid;
+    justify-items: center;
+}
+
+.subsearch {
+    display: grid;
+    justify-content: space-between;
+    align-content: space-evenly;
+    align-items: center;
+    justify-items: center;
+    filter: drop-shadow(0px 3px 5px rgba(0, 0, 0.25));
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+.search__title {
+    margin: 10px 0;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 70px;
+    color: #000000;
+}
+
+input {
+    margin-bottom: 10px;
+    width: 200px;
+    border-radius: 40px;
+}
+
+.searchBtn {
+    width: 200px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+.searchBtn img {
+    width: 30%;
+}
+
+.output {
+    min-width: 640px;
+    margin-top: 5px;
+    padding: 10px 0;
+    border: #000000;
+    border-style: groove;
+    border-radius: 10px;
+    display: grid;
+    justify-content: space-around;
+    align-content: space-evenly;
+    align-items: center;
+    justify-items: center;
+}
+
+.output a {
+    margin: 10px 0;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    color: #000000;
+}
+
+.saveSection {
+    margin-top: 5px;
+    padding: 10px 0;
+    display: grid;
+    justify-content: space-around;
+    align-content: space-evenly;
+    align-items: center;
+    justify-items: center;
+}
+
+.saveBtn {
+    margin-top: 5px;
+    border-radius: 40px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: #000000;
+    padding: 13px 25px;
+}
