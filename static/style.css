@@ -104,6 +104,16 @@ input {
     color: #000000;
 }
 
+.output p {
+    margin: 10px 0;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    color: #000000;
+}
+
 .saveSection {
     margin-top: 5px;
     padding: 10px 0;

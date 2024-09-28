@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="cz">
 
 <head>
     <meta charset='utf-8'>
@@ -41,6 +41,8 @@
 <script>
     var resultToSave;
     const saveBtn = document.getElementById("saveBtn");
+
+    // Přidání události pro tlačítko "Uložit"
     saveBtn.addEventListener("click", () => {
         if (resultToSave) {
             const file = new Blob([JSON.stringify(resultToSave, ["url", "title", "snippet"], "\t")], { type: 'application/json' });
@@ -55,7 +57,7 @@
     });
 
     document.getElementById('searchFormID').onsubmit = async function (event) {
-        event.preventDefault();  // Отменяем стандартное поведение формы
+        event.preventDefault();  // Zrušení výchozího chování formuláře
 
         const q = document.getElementById('searchID').value;
 
@@ -69,14 +71,15 @@
 
         const results = await response.json();
         resultToSave = results;
-        // Отображаем результаты
+
+         // Zobrazení výsledků
         const outputSection = document.getElementById('section-Output');
         while (outputSection.firstChild) {
             outputSection.removeChild(outputSection.firstChild);
         }
-        // Проверка на наличие ошибок
+         // Kontrola na chyby
         if (results.error) {
-            outputSection.innerHTML = `<p>Ошибка: ${results.error}</p>`;
+            outputSection.innerHTML = `<p>Chyba: ${results.error}</p>`;
         } else {
             results.forEach(result => {
                 outputSection.insertAdjacentHTML('afterbegin', `<div class="output"><a href="${result.url}">${result.title}</a><p>${result.snippet}</p></div>`);
