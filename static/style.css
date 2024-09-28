@@ -104,7 +104,7 @@ input {
     color: #000000;
 }
 
-.output p {
+.error p {
     margin: 10px 0;
     text-decoration: none;
     font-family: 'Roboto', sans-serif;

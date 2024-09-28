@@ -79,7 +79,7 @@
         }
          // Kontrola na chyby
         if (results.error) {
-            outputSection.innerHTML = `<p>Chyba: ${results.error}</p>`;
+            outputSection.innerHTML = `<p class="error">Chyba: ${results.error}</p>`;
         } else {
             results.forEach(result => {
                 outputSection.insertAdjacentHTML('afterbegin', `<div class="output"><a href="${result.url}">${result.title}</a><p>${result.snippet}</p></div>`);
