@@ -8,51 +8,51 @@ from flask_cors import CORS
 import time
 
 app = Flask(__name__)
-CORS(app)  # Разрешаем CORS для всех маршрутов
+CORS(app)  # Povolit CORS pro všechny trasy
 
-# Указываем путь к драйверу Chrome
-chrome_service = Service('C:/chromedriver-win64/chromedriver.exe')  # Замените на путь к вашему chromedriver
+# Určete cestu k ovladači Chrome
+chrome_service = Service('C:/chromedriver-win64/chromedriver.exe')  # Nahraďte cestou k vašemu chromedriveru
 
 chrome_options = Options()
-chrome_options.add_argument('--headless')  # Если хотите видеть браузер, уберите эту строку
+chrome_options.add_argument('--headless')   # Pokud chcete vidět prohlížeč, odstraňte tento řádek
 
-# Инициализация драйвера
+# Inicializace ovladače
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
 @app.route('/')
 def index():
-    return render_template('index.html')  # Отправляем index.html, когда запрашивается корень
+    return render_template('index.html')  # Zasíláme index.html, když je požadován kořenový adresář
 
 @app.route('/search', methods=['POST'])
 def search_google():
     try:
         data = request.get_json()
-        print(f"Полученные данные: {data}")
-        keywords = data.get('q', '')  # Получаем ключевые слова из запроса
+        print(f"Získaná data: {data}")
+        keywords = data.get('q', '')  ## Získání klíčových slov z požadavku
 
         if not keywords:
-            return jsonify({"error": "Пожалуйста, введите ключевые слова"}), 400
+            return jsonify({"error": "Zadejte prosím klíčová slova"}), 400
 
         query = "+".join(keywords.split())
         url = f"https://www.google.com/search?q={query}&num=10"
         
         driver.get(url)
-        time.sleep(3)  # Даем время странице загрузиться
+        time.sleep(3)  # # Dáme stránce čas na načtení
 
         html = driver.page_source
         soup = BeautifulSoup(html, "html.parser")
         results = []
 
-        # Извлечение результатов поиска
+        # Extrakce výsledků vyhledávání
         for item in soup.find_all('div', class_='MjjYud'):
             title = item.find('h3')
             link = item.find('a')
             snippet = item.find('span')
 
-            # Проверяем, существует ли элемент перед доступом к его атрибутам
+            # Zkontrolujeme, zda element existuje před přístupem k jeho atributům
             if title and link and snippet:
-                result_link = link.get('href')  # Используем get для безопасного получения атрибута
-                if result_link:  # Дополнительная проверка
+                result_link = link.get('href')  # Používáme get pro bezpečné získání atributu
+                if result_link:  # Další kontrola
                     formatted_snippet = snippet.text.replace('https', ' https')
                     results.append({
                         "title": title.text,
@@ -60,10 +60,10 @@ def search_google():
                         "snippet": formatted_snippet
                     })
         print(results)
-        return jsonify(results) if results else jsonify({"message": "Нет результатов"}), 200
+        return jsonify(results) if results else jsonify({"message": "Žádné výsledky"}), 200
 
     except Exception as e:
-        print(f"Произошла ошибка: {e}")  # Логируем ошибку
+        print(f"Došlo k chybě: {e}")  # Logujeme chybu
         return jsonify({"error": str(e)}), 500 
 
 if __name__ == "__main__":
